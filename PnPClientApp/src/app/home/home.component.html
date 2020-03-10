@@ -1,0 +1,45 @@
+<div class="row" id="resizeToDiv">
+  <div *ngFor="let product of products; let i = index" class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+             <div class="thumbnail">
+                <a [routerLink]="">
+                <img [src]="'../../../assets/img/' + product.imageUrl" alt="" >
+              </a>
+                <div class="caption">
+                  <p>
+                    This is the best product available in the market.
+                  </p>
+                  <ul class="list-group">
+                    <li class="list-group-item"><strong>ID : </strong >{{product.id}}</li>
+                  </ul> <br>
+                    <strong>Price: </strong>
+                    <ul class="list-group">
+                      <li class="list-group-item"><strong>Quantity : </strong >{{product.quantity}}</li>
+                    </ul>
+              </div>
+          </div>
+  </div>
+</div>
+</div>
+
+
+<div *ngFor="let product of products; let i = index" class="col-md-3">
+<div class="card mb-4">
+  <div class="card-img-wrapper">
+    <img class="card-img-top thumbnail" [src]="'../../../assets/img/' + product.imageUrl" alt="{{product.productName}}" >
+    <ul class="list-inline member-icons animate text-center">
+      <li class="list-inline-item"><button class="btn-primary"
+        [routerLink]="['/members/', product.id]"><i class="fa fa-user"></i></button></li>
+      <li class="list-inline-item"><button class="btn-primary"><i class="fa fa-heart"></i></button></li>
+      <li class="list-inline-item"><button class="btn-primary"><i class="fa fa-envelope"></i></button></li>
+    </ul>
+  </div>
+  <div class="card-body p-1">
+    <h6 class="card-title text-center mb-1"><i class="fa fa-user"></i>
+      {{'user.knownAs'}}, {{'user.age'}}
+    </h6>
+    <p class="card-text text-muted text-center">{{'user.city'}}</p>
+  </div>
+</div>
+</div>

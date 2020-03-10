@@ -1,0 +1,388 @@
+<br>
+<div class="container-fluid">
+  <button class="btn btn-info mb-3 float-right text-uppercase" (click)="onAddProduct()"><i class="fa fa-plus"></i> Add
+    Product</button>
+  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-bordered row-border hover">
+    <thead class="text-center thead-dark">
+      <tr>
+        <th>Id</th>
+        <th>ImageUrl</th>
+        <th>Barcode</th>
+        <th>ProductName</th>
+        <th>ProductType</th>
+        <th>Description</th>
+        <th>Features</th>
+        <th>Price</th>
+        <th>Out of Stock</th>
+        <th>Edit / Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products" class="text-center">
+        <td>{{product.id}}</td>
+        <td><img [src]='"./../../../assets/img/" + product.imageUrl' *ngIf="product.imageUrl" style="float:right"
+            width="75" /></td>
+        <td>{{product.barcode}}</td>
+        <td>{{product.productName}}</td>
+        <td>{{product.productType}}</td>
+        <td>{{product.productDescription}}</td>
+        <td>{{product.features}}</td>
+        <td>{{product.price|currency:'ZAR':'symbol-narrow':'.2' }}</td>
+        <td>{{true == product.outOfStock ? 'YES' : 'NO'}}</td>
+        <td>
+          <div class="btn-group mt-2" role="group">
+            <button type="button" class="btn btn-success" (click)="onSelect(product)"><i
+                class="fa fa-list"></i></button>
+            <button type="button" class="btn btn-primary" (click)="onUpdateModal(product)"><i
+                class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-danger" (click)="onDelete(product)"><i
+                class="fa fa-trash"></i></button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #addTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">ADD PRODUCT DETAILS</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="list-group-item active text-center text-uppercase">{{modalMessage}}</p>
+    <form [formGroup]="insertForm" (ngSubmit)="onSubmit()">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="barcode"><i class="fa fa-pencil-square-o">Barcode</i></span>
+            </div>
+            <input type="text" id="barcode" formControlName="barcode" class="form-control" placeholder=""
+              aria-label="barcode" aria-describedby="Barcode">
+          </div>
+          <div *ngIf="barcode.touched && barcode.errors" class="errorMessage">
+            <span *ngIf="barcode.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productName"><i class="fa fa-pencil-square-o">Product Name</i></span>
+            </div>
+            <input formControlName="productName" class="form-control" placeholder="" aria-label="productName"
+              aria-describedby="productName" />
+          </div>
+          <div *ngIf="productName.touched && productName.errors" class="errorMessage">
+            <span *ngIf="productName.hasError('required')">Product Description is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productDescription"><i class="fa fa-pencil-square-o">Product
+                  Description</i></span>
+            </div>
+            <input type="text" id="productDescription" formControlName="productDescription" class="form-control"
+              placeholder="" aria-label="productDescription" aria-describedby="productDescription">
+          </div>
+          <div *ngIf="productDescription.touched && productDescription.errors" class="errorMessage">
+            <span *ngIf="productDescription.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="imageUrl"><i class="fa fa-pencil-square-o">Upload Image</i></span>
+            </div>
+            <input type="text" formControlName="imageUrl" class="form-control" placeholder="" aria-label="imageUrl"
+              aria-describedby="imageUrl" />
+          </div>
+          <div *ngIf="imageUrl.touched && imageUrl.errors" class="errorMessage">
+            <span *ngIf="imageUrl.hasError('required')">Product Quantity is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productType"><i class="fa fa-pencil-square-o">Product Type</i></span>
+            </div>
+            <input type="text" id="productType" formControlName="productType" class="form-control" placeholder=""
+              aria-label="productType" aria-describedby="productType">
+          </div>
+          <div *ngIf="productType.touched && productType.errors" class="errorMessage">
+            <span *ngIf="productType.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="price"><i class="fa fa-pencil-square-o">Price</i></span>
+            </div>
+            <input formControlName="price" type="text" class="form-control" placeholder="eg: 999.99">
+          </div>
+          <div *ngIf="price.touched && price.errors" class="errorMessage">
+            <span *ngIf="price.hasError('required')">Product Price is required.</span>
+            <span *ngIf="price.hasError('min')">Negative price Not allowed</span>
+            <span *ngIf="price.hasError('max')">Max price allowes is 10000</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="quantity"><i class="fa fa-pencil-square-o">Quantity</i></span>
+            </div>
+            <input type="number" id="quantity" formControlName="quantity" class="form-control" placeholder=""
+              aria-label="quantity" aria-describedby="quantity">
+          </div>
+          <div *ngIf="quantity.touched && quantity.errors" class="errorMessage">
+            <span *ngIf="quantity.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="features"><i class="fa fa-pencil-square-o">Features</i></span>
+            </div>
+            <input type="text" id="features" formControlName="features" class="form-control" placeholder=""
+              aria-label="features" aria-describedby="features">
+          </div>
+          <div *ngIf="features.touched && features.errors" class="errorMessage">
+            <span *ngIf="features.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-pencil-square-o">Out of Stock</i></span>
+          </div>
+          <div class="form-inline">
+          <div class="input-group form-inline mt-2">
+            <div class="form-inline radio-inline mx-0">
+              <label class="mx-2" id="outOfStocktrue">Yes</label>
+              <input type="radio" id="outOfStocktrue" formControlName="outOfStock" [value]="true" class="form-control pl-1"
+                placeholder="" aria-label="outOfStocktrue" aria-describedby="outOfStocktrue">
+          </div>
+        </div>
+          <div class="input-group form-inline mt-2">
+            <div class="form-inline radio-inline mx-4">
+              <label class="mx-2" id="outOfStockfalse">No</label>
+              <input type="radio" id="outOfStockfalse" formControlName="outOfStock" [value]="false" class="form-control pl-1"
+                placeholder="" aria-label="outOfStockfalse" aria-describedby="outOfStockfalse">
+            </div>
+          </div>
+        </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="billingAddress"><i class="fa fa-pencil-square-o">Billing
+                  Address</i></span>
+            </div>
+            <input type="text" id="billingAddress" formControlName="billingAddress" class="form-control" placeholder=""
+              aria-label="billingAddress" aria-describedby="billingAddress">
+          </div>
+          <div *ngIf="billingAddress.touched && billingAddress.errors" class="errorMessage">
+            <span *ngIf="billingAddress.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="tc"><i class="fa fa-pencil-square-o">T&Cs</i></span>
+            </div>
+            <textarea type="text" id="tc" formControlName="tc" class="form-control" placeholder="" aria-label="tc"
+              aria-describedby="tc"></textarea>
+          </div>
+          <div *ngIf="tc.touched && tc.errors" class="errorMessage">
+            <span *ngIf="tc.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <button [disabled]="insertForm.invalid" class="btn btn-primary btn-block">UPDATE</button>
+        </li>
+      </ul>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #editTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title">EDIT PRODUCT DETAILS</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <p class="list-group-item active text-center text-uppercase">{{modalMessage}}</p>
+    <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
+      <ul class="list-group">
+        <li class="list-group-item" [hidden]="_id">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="id"><i class="fa fa-key"></i></span>
+            </div>
+            <input type="number" class="form-control" formControlName="id" />
+          </div>
+
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="_barcode"><i class="fa fa-pencil-square-o">Barcode</i></span>
+            </div>
+            <input type="text" id="barcode" formControlName="barcode" class="form-control" placeholder=""
+              aria-label="barcode" aria-describedby="Barcode">
+          </div>
+          <div *ngIf="_barcode.touched && _barcode.errors" class="errorMessage">
+            <span *ngIf="_barcode.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productName"><i class="fa fa-pencil-square-o">Product Name</i></span>
+            </div>
+            <input formControlName="productName" class="form-control" placeholder="" aria-label="productName"
+              aria-describedby="productName" />
+          </div>
+          <div *ngIf="_productName.touched && _productName.errors" class="errorMessage">
+            <span *ngIf="_productName.hasError('required')">Product Description is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productDescription"><i class="fa fa-pencil-square-o">Product
+                  Description</i></span>
+            </div>
+            <input type="text" id="productDescription" formControlName="productDescription" class="form-control"
+              placeholder="" aria-label="productDescription" aria-describedby="productDescription">
+          </div>
+          <div *ngIf="_productDescription.touched && _productDescription.errors" class="errorMessage">
+            <span *ngIf="_productDescription.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="imageUrl"><i class="fa fa-pencil-square-o">Upload Image</i></span>
+            </div>
+            <input type="text" formControlName="imageUrl" class="form-control" placeholder="" aria-label="imageUrl"
+              aria-describedby="imageUrl" />
+          </div>
+          <div *ngIf="_imageUrl.touched && _imageUrl.errors" class="errorMessage">
+            <span *ngIf="_imageUrl.hasError('required')">Product Quantity is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productType"><i class="fa fa-pencil-square-o">Product Type</i></span>
+            </div>
+            <input type="text" id="productType" formControlName="productType" class="form-control" placeholder=""
+              aria-label="productType" aria-describedby="productType">
+          </div>
+          <div *ngIf="_productType.touched && _productType.errors" class="errorMessage">
+            <span *ngIf="_productType.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="price"><i class="fa fa-pencil-square-o">Price</i></span>
+            </div>
+            <input formControlName="price" type="text" class="form-control" placeholder="eg: 999.99">
+          </div>
+          <div *ngIf="_price.touched && _price.errors" class="errorMessage">
+            <span *ngIf="_price.hasError('required')">Product Price is required.</span>
+            <span *ngIf="_price.hasError('min')">Negative price Not allowed</span>
+            <span *ngIf="_price.hasError('max')">Max price allowes is 10000</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="quantity"><i class="fa fa-pencil-square-o">Quantity</i></span>
+            </div>
+            <input type="number" id="quantity" formControlName="quantity" class="form-control" placeholder=""
+              aria-label="quantity" aria-describedby="quantity">
+          </div>
+          <div *ngIf="_quantity.touched && _quantity.errors" class="errorMessage">
+            <span *ngIf="_quantity.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="features"><i class="fa fa-pencil-square-o">Features</i></span>
+            </div>
+            <input type="text" id="features" formControlName="features" class="form-control" placeholder=""
+              aria-label="features" aria-describedby="features">
+          </div>
+          <div *ngIf="_features.touched && _features.errors" class="errorMessage">
+            <span *ngIf="_features.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fa fa-pencil-square-o">Out of Stock</i></span>
+          </div>
+          <div class="form-inline">
+          <div class="input-group form-inline mt-2">
+            <div class="form-inline radio-inline mx-0">
+              <label class="mx-2" id="outOfStocktrue">Yes</label>
+              <input type="radio" id="outOfStocktrue" formControlName="outOfStock" [value]="true" class="form-control pl-1"
+                placeholder="" aria-label="outOfStocktrue" aria-describedby="outOfStocktrue">
+          </div>
+        </div>
+          <div class="input-group form-inline mt-2">
+            <div class="form-inline radio-inline mx-4">
+              <label class="mx-2" id="outOfStockfalse">No</label>
+              <input type="radio" id="outOfStockfalse" formControlName="outOfStock" [value]="false" class="form-control pl-1"
+                placeholder="" aria-label="outOfStockfalse" aria-describedby="outOfStockfalse">
+            </div>
+          </div>
+        </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="billingAddress"><i class="fa fa-pencil-square-o">Billing
+                  Address</i></span>
+            </div>
+            <input type="text" id="billingAddress" formControlName="billingAddress" class="form-control" placeholder=""
+              aria-label="billingAddress" aria-describedby="billingAddress">
+          </div>
+          <div *ngIf="_billingAddress.touched && _billingAddress.errors" class="errorMessage">
+            <span *ngIf="_billingAddress.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="tc"><i class="fa fa-pencil-square-o">T&Cs</i></span>
+            </div>
+            <textarea type="text" id="tc" formControlName="tc" class="form-control" placeholder="" aria-label="tc"
+              aria-describedby="tc"></textarea>
+          </div>
+          <div *ngIf="_tc.touched && _tc.errors" class="errorMessage">
+            <span *ngIf="_tc.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <button [disabled]="updateForm.invalid" class="btn btn-primary btn-block">UPDATE</button>
+        </li>
+      </ul>
+</form>
+</div>
+</ng-template>

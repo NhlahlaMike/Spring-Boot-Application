@@ -1,0 +1,15 @@
+.container {
+  padding-top: 10%;
+  padding-bottom: 10%;
+  width: 100%;
+  margin: 0 auto;
+  align-content: center;
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center; /* center vertically */
+  }
+  form {
+    margin:auto;
+    width: 800px;
+    padding-left: 200px;
+  }

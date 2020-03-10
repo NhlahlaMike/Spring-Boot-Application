@@ -1,0 +1,24 @@
+table> tbody> tr{
+  background: #ffffff;
+}
+/* Define the hover highlight color for the table row */
+table> tbody> tr:hover {
+  /*cursor: pointer;*/
+    background-color: burlywood;
+  }
+  .modal-lg .modal-dialog{
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .input-group-prepend {
+    width : 23%; /*adjust as needed*/
+  }
+  .input-group-prepend span {
+    width: 100%;
+    overflow: hidden;
+  }
+  input[type=radio] {
+    width: 30px;
+    height: 30px;
+    /*margin-left: 15px;*/
+}

@@ -1,0 +1,83 @@
+<header>
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm" style=" background-color:#ab2247;
+  max-height: 35px !important;">
+    <a style="font-size: 12px; font-weight: 600;" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">YOUR REGION</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+      <ul class="navbar-nav flex-grow-2">
+        <li class="nav-item">
+          <a style="font-size: 12px; font-weight: 600;" class="nav-link text-white" [routerLink]='["/"]'>Home</a>
+        </li>
+        <li ngbDropdown class=" nav-item dropdown" *ngIf="(LoginStatus$ | async) as LoginStatus">
+                <a *ngIf="(UserName$ | async) as UserName" ngbDropdownToggle href='#'  class="nav-link dropdown-toggle text-white" id="navbardrop" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{UserName | uppercase}}
+                  <span class="caret"></span></a>
+                <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #ab2247;font-size: 12px; font-weight: 600;">
+                  <a class="nav-item text-white dropdown-item" href="#">Action</a>
+                  <a class="nav-item text-white dropdown-item" href="#">Another action</a>
+                  <a (click)="onLogout()" class="nav-item text-white dropdown-item" href="#">SIGNOUT</a>
+                </div>
+      </li>
+    <li class="collapse navbar-collapse" id="navbarCollapse" *ngIf="!(LoginStatus$ | async) as LoginStatus">
+      <div class="navbar-nav ml-auto">
+          <a style="font-size: 12px; font-weight: 600;" routerLink="/user/login" class="nav-item nav-link text-white" >LOG IN</a>
+          <span class="nav-item nav-link">|</span>
+          <a style="font-size: 12px; font-weight: 600;" routerLink="/user/register" class="nav-item nav-link text-white" >SIGN UP </a>
+      </div>
+    </li>
+    <li class="nav-item" *ngIf="(LoginStatus$ | async) as LoginStatus">
+      <a style="font-size: 12px; font-weight: 600;" class="nav-link text-white" [routerLink]='["/"]' (click)="onLogout()">LogOut</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" routerLink="/adminpanel">Admin Panel</a>
+    </li>
+</ul>
+</div>
+  </nav>
+  <nav *ngIf="!(LoginStatus$ | async) as LoginStatus" class="navbar navbar-expand-sm navbar-toggleable-sm" style=" padding: 2rem; background-color:white;
+  max-height: 35px !important;">
+  <a class="navbar-brand" routerLink='/productdisplay'>
+    <img src="../../assets/img/Logo/logo3.png"></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse navbar-right">
+    <ul class="navbar-nav flex-grow-2">
+    <li class="nav-item">
+      <form class="form-inline my-2 my-lg-0">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span>
+          <input style="width: 300px" type="search" class="form-control mr-sm-2" placeholder="I'm looking for" aria-label="Search">
+        </div>
+    </form>
+  </li>
+  <li class="nav-item">
+    <button class="btn btn-blue text-white" [routerLink]='["/"]'><i class="fa fa-1x fa-heart-o"></i> &nbsp; FAVOURATE</button>
+  </li>
+  <li><span>&nbsp;&nbsp;</span></li>
+  <li class="nav-item">
+    <button class="btn btn-black text-white" [routerLink]='["/"]'><i class="fa fa-list"></i> &nbsp; SHOPPING LIST</button>
+  </li>
+    <li class="nav-item" id="cart">
+      <a class="nav-link text-white" [routerLink]='["/cart"]'>
+        <i style="color: #ab2247; font-size: 20px" class="fa fa-shopping-cart has-badge"></i> {{cartItemCount}} <span style="background-color: #ab2247;" class="badge badge-light text-white">3</span>
+      </a>
+    </li>
+    <li class="nav-item" id="cart">
+      <a class="nav-link text-white" [routerLink]='["/cart"]'>
+        <i style="color: grey; font-size: 20px" class="fa fa-truck"></i>
+      </a>
+    </li>
+    <li class="nav-item" id="cart">
+      <a class="p1 fa-stack fa-2x has-badge nav-link text-white" [routerLink]='["/cart"]' [attr.data-count]="0">
+        <i style="color: grey; font-size: 20px" class="p3 fa fa-shopping-cart fa-stack-1x xfa-inverse" data-count="0b"></i>
+      </a>
+    </li>
+</ul>
+</div>
+  </nav>
+</header>
