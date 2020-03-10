@@ -3,8 +3,9 @@
     <div class="card">
       <div class="card-body">
              <div class="thumbnail">
-                <a [routerLink]="">
-                <img [src]="'../../../assets/img/' + product.imageUrl" alt="" >
+              <!--<a [routerLink]="" click="onSelect(product)"> -->
+                <a [routerLink]="['/productview/', product.id]">
+                <img class="thumbnail" [src]="'../../../assets/img/' + product.imageUrl" alt="" >
               </a>
                 <div class="caption">
                   <p>
@@ -23,14 +24,15 @@
 </div>
 </div>
 
-
 <div *ngFor="let product of products; let i = index" class="col-md-3">
 <div class="card mb-4">
   <div class="card-img-wrapper">
+    <a [routerLink]="['/productview/', product.id]">
     <img class="card-img-top thumbnail" [src]="'../../../assets/img/' + product.imageUrl" alt="{{product.productName}}" >
+    </a>
     <ul class="list-inline member-icons animate text-center">
       <li class="list-inline-item"><button class="btn-primary"
-        [routerLink]="['/members/', product.id]"><i class="fa fa-user"></i></button></li>
+        [routerLink]="['/productview/', product.id]"><i class="fa fa-user"></i></button></li>
       <li class="list-inline-item"><button class="btn-primary"><i class="fa fa-heart"></i></button></li>
       <li class="list-inline-item"><button class="btn-primary"><i class="fa fa-envelope"></i></button></li>
     </ul>

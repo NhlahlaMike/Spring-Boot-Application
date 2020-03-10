@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../_interfaces/product';
 import { ProductService } from '../_services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   globalResponse: any;
 
-  constructor(private pservice: ProductService) { }
+  constructor(private pservice: ProductService,
+              private router: Router) { }
 
   ngOnInit() {
             // load all products from database
@@ -25,6 +27,10 @@ export class HomeComponent implements OnInit {
               this.globalResponse = res;
               });
 
+  }
+
+  onSelect(product: Product) {
+    this.router.navigateByUrl('/productview/' + product.id);
   }
 
 }
