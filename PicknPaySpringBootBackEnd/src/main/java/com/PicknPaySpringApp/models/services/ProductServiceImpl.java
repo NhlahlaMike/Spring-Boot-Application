@@ -16,6 +16,11 @@ public class ProductServiceImpl implements IProductService{
 	private IProductDao productDao;
 	
 	@Override
+	@Transactional
+	public Boolean existsByBarcode(String barcode) {
+		return productDao.existsByBarcode(barcode);
+	}
+	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll() {
 		return (List<Product>) productDao.findAll();

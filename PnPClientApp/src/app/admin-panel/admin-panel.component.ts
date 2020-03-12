@@ -27,6 +27,7 @@ export class AdminPanelComponent implements OnInit {
   price: FormControl;
   quantity: FormControl;
   features: FormControl;
+  productUsage: FormControl;
   outOfStock: FormControl;
   billingAddress: FormControl;
   tc: FormControl;
@@ -53,6 +54,8 @@ export class AdminPanelComponent implements OnInit {
   _quantity: FormControl;
   // tslint:disable-next-line:variable-name
   _features: FormControl;
+  // tslint:disable-next-line:variable-name
+  _productUsage: FormControl;
   // tslint:disable-next-line:variable-name
   _outOfStock: FormControl;
   // tslint:disable-next-line:variable-name
@@ -121,6 +124,7 @@ export class AdminPanelComponent implements OnInit {
     this.price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
     this.quantity = new FormControl('', [Validators.required]);
     this.features = new FormControl('', [Validators.required]);
+    this.productUsage = new FormControl();
     this.outOfStock = new FormControl(null, [Validators.required]);
     this.billingAddress = new FormControl('', [Validators.required]);
     this.tc = new FormControl('', [Validators.required]);
@@ -136,6 +140,7 @@ export class AdminPanelComponent implements OnInit {
       price: this.price,
       quantity: this.quantity,
       features: this.features,
+      productUsage: this.productUsage,
       outOfStock: this.outOfStock,
       billingAddress: this.billingAddress,
       tc: this.tc,
@@ -153,6 +158,7 @@ export class AdminPanelComponent implements OnInit {
     this._price = new FormControl('', [Validators.required, Validators.min(0), Validators.max(10000)]);
     this._quantity = new FormControl('', [Validators.required]);
     this._features = new FormControl('', [Validators.required]);
+    this._productUsage = new FormControl();
     this._outOfStock = new FormControl(null, [Validators.required]);
     this._billingAddress = new FormControl('', [Validators.required]);
     this._tc = new FormControl('', [Validators.required]);
@@ -169,6 +175,7 @@ export class AdminPanelComponent implements OnInit {
       price: this._price.value,
       quantity: this._quantity.value,
       features: this._features.value,
+      productUsage: this._productUsage,
       outOfStock: this._outOfStock.value,
       billingAddress: this._billingAddress.value,
       tc: this._tc.value,
@@ -213,6 +220,7 @@ export class AdminPanelComponent implements OnInit {
     this._price.setValue(productEdit.price);
     this._quantity.setValue(productEdit.quantity);
     this._features.setValue(productEdit.features);
+    this._productUsage.setValue(this.productUsage);
     this._outOfStock.setValue(productEdit.outOfStock);
     this._billingAddress.setValue(productEdit.billingAddress);
     this._tc.setValue(productEdit.tc);
@@ -229,6 +237,7 @@ export class AdminPanelComponent implements OnInit {
       price: this._price,
       quantity: this._quantity,
       features: this._features,
+      productUsage: this._productUsage,
       outOfStock: this._outOfStock,
       billingAddress: this._billingAddress,
       tc: this._tc,

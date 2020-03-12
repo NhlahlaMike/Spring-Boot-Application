@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,9 +40,10 @@ public class Product implements Serializable{
 	private String tc;
 	private int sellerId;
 	private String sellerName;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="category_id")
+	private ProductCategory productCategory;
 	
-	public Product() {}
-
 	public Long getId() {
 		return id;
 	}
@@ -159,6 +163,14 @@ public class Product implements Serializable{
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
 	}
-	
+
+	public ProductCategory getProductCategory() {
+		return productCategory;
+	}
+
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
+	}
+
 	private static final long serialVersionUID = 1L;
 }

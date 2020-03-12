@@ -8,6 +8,7 @@ export interface Product {
   price: number;
   quantity: number;
   features: string;
+  productUsage: string;
   outOfStock: boolean;
   billingAddress: string;
   tc: string;
