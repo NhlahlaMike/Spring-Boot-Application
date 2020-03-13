@@ -155,6 +155,19 @@
         </li>
 
         <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productUsage"><i class="fa fa-pencil-square-o">product Usage</i></span>
+            </div>
+            <input type="text" id="productUsage" formControlName="productUsage" class="form-control" placeholder=""
+              aria-label="productUsage" aria-describedby="productUsage">
+          </div>
+          <div *ngIf="productUsage.touched && productUsage.errors" class="errorMessage">
+            <span *ngIf="productUsage.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
           <div class="input-group-prepend">
             <span class="input-group-text"><i class="fa fa-pencil-square-o">Out of Stock</i></span>
           </div>
@@ -327,6 +340,19 @@
           </div>
           <div *ngIf="_features.touched && _features.errors" class="errorMessage">
             <span *ngIf="_features.hasError('required')">Product Name is required.</span>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="productUsage"><i class="fa fa-pencil-square-o">product Usage</i></span>
+            </div>
+            <input type="text" id="productUsage" formControlName="productUsage" class="form-control" placeholder=""
+              aria-label="productUsage" aria-describedby="productUsage">
+          </div>
+          <div *ngIf="_productUsage.touched && _productUsage.errors" class="errorMessage">
+            <span *ngIf="_productUsage.hasError('required')">Product Name is required.</span>
           </div>
         </li>
 
